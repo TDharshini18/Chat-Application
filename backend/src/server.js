@@ -5,11 +5,13 @@ import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./router/auth.route.js";    
 import messageRoutes from "./router/message.route.js";
-
+import connectDB from "./lib/db.js";
 dotenv.config();
 const app = express();
 
 const PORT=process.env.PORT || 3000;
+
+app.use(express.json()); //req body
 
 
 //Basic SetUp but unmanagable when lots of routes
@@ -29,5 +31,7 @@ const PORT=process.env.PORT || 3000;
 app.use("/api/auth",authRoutes);
 app.use ("/api/message",messageRoutes)
 
-app.listen(PORT,()=> 
-console.log("Server is running on port "+PORT));
+app.listen(PORT,()=> {
+    connectDB();
+    console.log("Server is running on port "+PORT)
+});
