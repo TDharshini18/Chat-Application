@@ -1,9 +1,7 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
-
+import {ENV} from "./env.js";
 export const generateToken = (userId, res) => {
-    const token = jwt.sign({userId }, process.env.JWT_SECRET, {
+    const token = jwt.sign({userId }, ENV.JWT_SECRET, {
         expiresIn: '7d',
     });
 
@@ -11,7 +9,7 @@ export const generateToken = (userId, res) => {
         maxAge: 7*24*60*60*1000, 
         httpOnly:true,
         sameSite:"Strict",
-        secure:process.env.NODE_ENV==="production"?true:false,
+        secure:ENV.NODE_ENV==="production"?true:false,
 
     })
 }
